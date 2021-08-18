@@ -13,4 +13,8 @@ class TestGeneric
     {
         return $var;
     }
+    #[T1] public function add(#[T1] $var, #[T1] $var2)
+    {
+        return $var + $var2;
+    }
 }

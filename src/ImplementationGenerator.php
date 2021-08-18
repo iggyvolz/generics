@@ -50,10 +50,9 @@ class ImplementationGenerator extends ClassGenerator
         $namespaceT->add($classT);
         // Parse the generic parameters
         $genericParamsRequested = self::genericClass($class)->classes;
-        $genericParamsPassed = preg_split("/(?<=>),/", substr($class, strpos($class, "«")+2, -2));
-
+        $genericParamsPassed = preg_split("/‚/", substr($class, strpos($class, "«")+2, -2)); // todo handle nested generics: /(?<=>)‚/ seemed to work only for nested ones
         if(count($genericParamsRequested) !== count($genericParamsPassed)) {
-            throw new LogicException(count($genericParamsPassed) . " params passed in $class but " . count($genericParams) . " required.");
+            throw new LogicException(count($genericParamsPassed) . " params passed in $class but " . count($genericParamsRequested) . " required.");
         }
         $genericParams = [];
         foreach($genericParamsRequested as $i => $key) {
