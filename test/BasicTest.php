@@ -19,8 +19,9 @@ Assert::same("int", (new ReflectionClass(TestGeneric«int»::class))->getMethod(
 Assert::same(420, $x->add(421, -1));
 Assert::same("2abc", TestGeneric2«int‚string»::concat(2,"abc"));
 Assert::same("DeezNuts\\Ha\\GotEm", TestGeneric«GotEm»::whatsmytype());
-$implementsInterface = new TestImplementsInterface();
+$implementsInterface = TestImplementsInterface::makeOne();
 Assert::same(1, $implementsInterface->foo());
+Assert::same(1, TestImplementsInterface::invokeFoo($implementsInterface));
 Assert::same(ImplementationGenerator::class, $implementsInterface->bar()::class);
 $extendsClass = new TestExtendsClass();
 Assert::same(1, $extendsClass->foo());

@@ -82,6 +82,18 @@ class ImplementationGenerator extends ClassGenerator
                 if(array_key_exists($attributeName, $genericParams)) {
                     $method->setReturnType($genericParams[$attributeName]);
                 }
+                if($attributeName === IsGeneric::class) {
+                    $isGeneric = new IsGeneric(...$attribute->getArguments());
+                    $isedGenerics = $isGeneric->generics;
+                    foreach($isedGenerics as &$generic) {
+                        // Replace T1 with the original generic
+                        // Don't fail if it's not a generic though - we may need to specify a type literal
+                        if(array_key_exists($generic, $genericParams)) {
+                            $generic = $genericParams[$generic];
+                        }
+                    }
+                    $method->setReturnType($isGeneric->class . "«" .  implode("‚", $isedGenerics) . "»");
+                }
             }
             // for all method parameter,s if they are annotated with the type, make the parameter type be that
             foreach($method->getParameters() as $parameter) {
@@ -89,6 +101,18 @@ class ImplementationGenerator extends ClassGenerator
                     $attributeName = $attribute->getName();
                     if(array_key_exists($attributeName, $genericParams)) {
                         $parameter->setType($genericParams[$attributeName]);
+                    }
+                    if($attributeName === IsGeneric::class) {
+                        $isGeneric = new IsGeneric(...$attribute->getArguments());
+                        $isedGenerics = $isGeneric->generics;
+                        foreach($isedGenerics as &$generic) {
+                            // Replace T1 with the original generic
+                            // Don't fail if it's not a generic though - we may need to specify a type literal
+                            if(array_key_exists($generic, $genericParams)) {
+                                $generic = $genericParams[$generic];
+                            }
+                        }
+                        $parameter->setType($isGeneric->class . "«" .  implode("‚", $isedGenerics) . "»");
                     }
                 }
             }
