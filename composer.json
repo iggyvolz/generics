@@ -1,0 +1,25 @@
+{
+    "name": "iggyvolz/generics",
+    "type": "library",
+    "require": {
+        "iggyvolz/classgen": "^0.1.0",
+        "iggyvolz/simple-attribute-reflection": "dev-main",
+        "nette/php-generator": "^3.5",
+        "nikic/php-parser": "^4.12"
+    },
+    "license": "BSD0",
+    "autoload": {
+        "psr-4": {
+            "Iggyvolz\\Generics\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Katie Volz",
+            "email": "iggyvolz@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "nette/tester": "^2.3"
+    }
+}
