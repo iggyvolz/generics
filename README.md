@@ -35,14 +35,11 @@ class TestGeneric«int»
 	#[\Iggyvolz\Generics\T1]
 	public function foo(#[\Iggyvolz\Generics\T1] int $var): int
 	{
-		try {
-      'Iggyvolz\\Generics\\T1'::push('int');
-      return $var;
-		} finally {
-      'Iggyvolz\\Generics\\T1'::pop();
-    }
+		try {'Iggyvolz\\Generics\\T1'::push('int');return $var;
+		} finally {'Iggyvolz\\Generics\\T1'::pop();}
 	}
 }
+
 ```
 
 Yes, « and » are valid in PHP class names.
