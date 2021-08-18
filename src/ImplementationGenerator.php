@@ -71,7 +71,9 @@ class ImplementationGenerator extends ClassGenerator
         }
         $postBody .= "}";
         foreach($classT->methods as $method) {
-            $method->setBody($preBody . $method->getBody() . $postBody);
+            if($method->getBody() !== null) {
+                $method->setBody($preBody . $method->getBody() . $postBody);
+            }
         }
         // for all methods, if they are annotated with the type, make the return type be that
         foreach($classT->methods as $method) {
@@ -90,6 +92,35 @@ class ImplementationGenerator extends ClassGenerator
                     }
                 }
             }
+        }
+        // Add extensions and implementations
+        foreach(AttributeReflection::getAttributes(self::reflectBaseClass($class), ExtendsGeneric::class) as $extendsGeneric) {
+            $extendedGenerics = $extendsGeneric->generics;
+            foreach($extendedGenerics as &$generic) {
+                // Replace T1 with the original generic
+                // Don't fail if it's not a generic though - we may need to specify a type literal
+                if(array_key_exists($generic, $genericParams)) {
+                    $generic = $genericParams[$generic];
+                }
+            }
+            /**
+             * @var ExtendsGeneric $extendsGeneric
+             */
+            $classT->addExtend($extendsGeneric->extends . "«" .  implode("‚", $extendedGenerics) . "»");
+        }
+        foreach(AttributeReflection::getAttributes(self::reflectBaseClass($class), ImplementsGeneric::class) as $implementsGeneric) {
+            $implementedGenerics = $implementsGeneric->generics;
+            foreach($implementedGenerics as &$generic) {
+                // Replace T1 with the original generic
+                // Don't fail if it's not a generic though - we may need to specify a type literal
+                if(array_key_exists($generic, $genericParams)) {
+                    $generic = $genericParams[$generic];
+                }
+            }
+            /**
+             * @var ImplementsGeneric $implementsGeneric
+             */
+            $classT->addImplement($implementsGeneric->implements . "«" .  implode("‚", $implementedGenerics) . "»");
         }
         return $namespaceT;
     }

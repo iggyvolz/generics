@@ -13,6 +13,11 @@
             "Iggyvolz\\Generics\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Iggyvolz\\Generics\\test\\": "test/"
+        }
+    },
     "authors": [
         {
             "name": "Katie Volz",
