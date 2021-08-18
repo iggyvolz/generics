@@ -1,7 +1,7 @@
 <?php
 
 namespace Iggyvolz\Generics;
-#[\Attribute(\Attribute::IS_REPEATABLE)]
+#[\Attribute(\Attribute::TARGET_ALL |\Attribute::IS_REPEATABLE)]
 class ExtendsGeneric
 {
 
