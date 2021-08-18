@@ -3,6 +3,7 @@
 use Iggyvolz\Generics\ImplementationGenerator;
 use Iggyvolz\Generics\test\TestGeneric2«int‚string»;
 use Iggyvolz\Generics\test\TestGeneric«int»;
+use Iggyvolz\Generics\test\TestGeneric«DeezNutsHaGotEm»;
 use Tester\Assert;
 
 require_once __DIR__ . "/TestGeneric.php";
@@ -17,3 +18,5 @@ Assert::same("int", (new ReflectionClass(TestGeneric«int»::class))->getMethod(
 Assert::same("int", (new ReflectionClass(TestGeneric«int»::class))->getMethod("foo")->getParameters()[0]->getType()?->getName());
 Assert::same(420, $x->add(421, -1));
 Assert::same("2abc", TestGeneric2«int‚string»::concat(2,"abc"));
+$genericType = "DeezNuts\\Ha\\GotEm";
+Assert::same("DeezNutsHaGotEm", TestGeneric«DeezNutsHaGotEm»::whatsmytype());

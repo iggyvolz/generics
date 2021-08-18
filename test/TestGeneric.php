@@ -17,4 +17,8 @@ class TestGeneric
     {
         return $var + $var2;
     }
+    public static function whatsmytype(): string
+    {
+        return T1::class();
+    }
 }
